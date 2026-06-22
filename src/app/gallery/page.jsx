@@ -18,12 +18,12 @@ const categories = [
 
 const hardcodedImages  = [
     { id: 1, category: "Weddings", image: "/show7.jpg", title: "Luxury Wedding" },
-    { id: 2, category: "Corporate Events", image: "/retreat.png", title: "Corporate Connect Event" },
+    { id: 2, category: "Corporate Events", image: "/retreat.jpg", title: "Corporate Connect Event" },
     { id: 3, category: "Burials & Memorial", image: "/gpic1.jpg", title: "Mrs Akisanya burial" },
     { id: 4, category: "Weddings", image: "/show10.webp", title: "Wedding Styling" },
     { id: 5, category: "Burials & Memorial", image: "/gpic2.jpg", title: "Mrs Akisanya burial" },
     { id: 6, category: "Birthday", image: "/birth1.jpg", title: "Mrs Oloruntgbe Birthday Celebration" },
-    { id: 7, category: "Corporate Events", image: "/conf.jfif", title: "Corporate Gala" },
+    { id: 7, category: "Corporate Events", image: "/conf.jpg", title: "Corporate Gala" },
     { id: 8, category: "Birthday", image: "/gal1.jpg", title: "Mrs Oloruntgbe Birthday Celebration" },
     { id: 9, category: "Birthday", image: "/gal2.jpg", title: "Mrs Oloruntgbe Birthday Celebration" },
     { id: 10, category: "Burials & Memorial", image: "/memo1.jpg", title: "Mrs Akisanya burial" },

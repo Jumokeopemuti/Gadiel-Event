@@ -7,21 +7,21 @@ import Link from "next/link";
 
 const galleryImages = [
   {
-    image: "/hero7.png",
+    image: "/hero7.jpg",
     title: "Luxury Wedding Decoration",
     description:
       "Elegant wedding setups with floral arrangements and premium décor.",
     link: "/services/luxury-events",
   },
   {
-    image: "/hero6.png",
+    image: "/hero6.jpg",
     title: "Birthday Celebration",
     description:
       "Creative birthday decorations tailored to your theme and budget.",
     link: "/services/social-events",
   },
   {
-    image: "/gala.jfif",
+    image: "/birthday.jpg",
     title: "Corporate Events",
     description:
       "Professional event styling for conferences, launches and galas.",
@@ -80,7 +80,7 @@ export default function Hero() {
       <div className="mx-auto max-w-7xl px-6">
         {/* Decorative Shapes */}
         <motion.img
-          src="/under1.png"
+          src="/under1.jpg"
           alt=""
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 0.1, x: 0 }}
@@ -89,7 +89,7 @@ export default function Hero() {
         />
 
         <motion.img
-          src="/under6.png"
+          src="/under6.jpg"
           alt=""
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 0.1, x: 0 }}

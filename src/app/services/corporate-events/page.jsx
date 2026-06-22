@@ -14,37 +14,37 @@ const services = [
         title: "Conferences",
         description:
             "Professional planning and execution of conferences, seminars, and industry gatherings.",
-        image: "/conf.jfif",
+        image: "/conf.jpg",
     },
     {
         title: "Company Retreats",
         description:
             "Team-building retreats designed to inspire collaboration and productivity.",
-        image: "/retreat2.jfif",
+        image: "/retreat2.jpg",
     },
     {
         title: "Product Launches",
         description:
             "Create excitement around your brand with unforgettable launch experiences.",
-        image: "/stage.jfif",
+        image: "/stage.jpg",
     },
     {
         title: "Corporate Galas",
         description:
             "Elegant gala dinners and executive events tailored to your organization.",
-        image: "/gala.jfif",
+        image: "/gala.jpg",
     },
     {
         title: "Networking Events",
         description:
             "Facilitating meaningful professional connections through engaging experiences.",
-        image: "/retreat.png",
+        image: "/retreat.jpg",
     },
     {
         title: "Award Ceremonies",
         description:
             "Celebrate achievements with professionally managed award presentations.",
-        image: "/award.jfif",
+        image: "/award.jpg",
     },
 ];
 
@@ -54,7 +54,7 @@ export default function CorporateEventsPage() {
             {/* HERO */}
             <section className="relative h-[90vh] overflow-hidden">
                 <Image
-                    src="/cop2.png"
+                    src="/cop2.jpg"
                     alt="Corporate Events"
                     fill
                     className="object-cover"

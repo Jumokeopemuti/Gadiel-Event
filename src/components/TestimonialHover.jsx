@@ -9,7 +9,7 @@ const testimonials = [
   {
     name: "Mrs Absede Oloruntegbe",
     role: "Birthday Client",
-    image: "/passenger6.jpeg",
+    image: "/passenger5.webp",
     text: "Gadiel Event Planners transformed our birthday party into a breathtaking experience of elegance and sophistication. Every detail was executed flawlessly, creating memories we will treasure forever.",
   },
   {

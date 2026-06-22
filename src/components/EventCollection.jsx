@@ -13,13 +13,13 @@ const events = [
   {
     title: "Corporate Event Experience",
     category: "Corporate Events",
-    image: "/cop2.png",
+    image: "/cop2.jpg",
   },
 
   {
     title: "Elegant Birthday Setup",
     category: "Social Celebrations",
-    image: "/hero-1.jpg",
+    image: "/hero7.jpg",
   },
 ];
 
