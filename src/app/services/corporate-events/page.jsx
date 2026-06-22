@@ -26,7 +26,7 @@ const services = [
         title: "Product Launches",
         description:
             "Create excitement around your brand with unforgettable launch experiences.",
-        image: "/stage.jpg",
+        image: "/Stage.jpg",
     },
     {
         title: "Corporate Galas",
