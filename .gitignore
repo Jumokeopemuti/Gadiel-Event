@@ -45,6 +45,6 @@ out/
 build/
 
 # only large media (SAFE VERSION)
-public/**/*.mp4
+
 public/models/
 
