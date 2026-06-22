@@ -47,7 +47,7 @@ export default function WhatWeDo() {
 
         {/* Decorative Image */}
         <motion.img
-          src="/under7.png"
+          src="/under7.jpg"
           alt="decor"
           animate={
             isInView

@@ -80,7 +80,7 @@ export default function Hero() {
       <div className="mx-auto max-w-7xl px-6">
         {/* Decorative Shapes */}
         <motion.img
-          src="/under1.jpg"
+          src="/under1.png"
           alt=""
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 0.1, x: 0 }}
@@ -89,7 +89,7 @@ export default function Hero() {
         />
 
         <motion.img
-          src="/under6.jpg"
+          src="/under6.png"
           alt=""
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 0.1, x: 0 }}
