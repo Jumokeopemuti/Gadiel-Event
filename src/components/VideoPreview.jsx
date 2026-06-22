@@ -19,7 +19,7 @@ export default function VideoPreview() {
 
                     {/* Thumbnail */}
                     <img
-                        src="/video-thumbnail.png"
+                        src="/video-thumbnail.jpg"
                         alt="Event Preview"
                         className="w-full h-[350px] md:h-[650px] object-cover"
                     />
