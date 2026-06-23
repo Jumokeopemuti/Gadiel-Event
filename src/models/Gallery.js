@@ -2,25 +2,15 @@ import mongoose from "mongoose";
 
 const GallerySchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
+    title: { type: String, required: true },
+    category: { type: String, required: true },
 
-    category: {
-      type: String,
-      required: true,
-    },
-
-    imageUrl: {
-      type: String,
-      required: true,
-    },
-
-    public_id: {
-      type: String,
-      required: true,
-    },
+    images: [
+      {
+        url: String,
+        public_id: String,
+      },
+    ],
   },
   { timestamps: true }
 );

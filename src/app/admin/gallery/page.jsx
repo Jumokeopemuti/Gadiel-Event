@@ -9,11 +9,10 @@ import {
 } from "lucide-react";
 
 export default function AdminGalleryPage() {
-
   const categories = [
     "Weddings",
     "Birthdays",
-    "Corporate",
+    "Corporate Events",
     "Decoration",
     "Outdoor Events",
     "Traditional Wedding",
@@ -29,6 +28,7 @@ export default function AdminGalleryPage() {
 
   const [preview, setPreview] = useState("");
 
+  // handle text inputs
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -36,9 +36,9 @@ export default function AdminGalleryPage() {
     });
   };
 
+  // image upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-
     if (!file) return;
 
     setFormData({
@@ -49,6 +49,7 @@ export default function AdminGalleryPage() {
     setPreview(URL.createObjectURL(file));
   };
 
+  // submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -59,381 +60,174 @@ export default function AdminGalleryPage() {
     data.append("category", formData.category);
     data.append("image", formData.image);
 
-    try {
-      const res = await fetch("/api/gallery", {
-        method: "POST",
-        body: data,
-      });
+    const res = await fetch("/api/gallery", {
+      method: "POST",
+      body: data,
+    });
 
-      if (!res.ok) throw new Error("Upload failed");
+    const newItem = await res.json();
 
-      const newItem = await res.json();
+    setGallery((prev) => [newItem, ...prev]);
 
-      setGallery((prev) => [newItem, ...prev]);
+    setFormData({
+      title: "",
+      category: "",
+      image: null,
+    });
 
-      setFormData({
-        title: "",
-        category: "",
-        image: null,
-      });
-
-      setPreview("");
-    } catch (err) {
-      console.error(err);
-      alert("Upload failed");
-    }
+    setPreview("");
   };
 
+  // delete
   const handleDelete = async (id) => {
     await fetch(`/api/gallery?id=${id}`, {
       method: "DELETE",
     });
 
-    setGallery((prev) =>
-      prev.filter((item) => item._id !== id)
-    );
+    setGallery((prev) => prev.filter((item) => item._id !== id));
   };
 
-
+  // fetch
   useEffect(() => {
-    fetchGallery();
+    fetch("/api/gallery")
+      .then((res) => res.json())
+      .then(setGallery);
   }, []);
-
-  const fetchGallery = async () => {
-    try {
-      const res = await fetch("/api/gallery");
-      const data = await res.json();
-
-      setGallery(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-
       <div className="max-w-7xl mx-auto space-y-8">
 
-        {/* Header */}
-
+        {/* HEADER */}
         <div>
-
-          <h1 className="text-3xl font-bold text-gray-900">
-            Gallery Management
-          </h1>
-
+          <h1 className="text-3xl font-bold">Gallery Management</h1>
           <p className="text-gray-500 mt-2">
-            Manage portfolio images and categories.
+            Upload and manage event images
           </p>
-
         </div>
 
-        {/* Stats */}
-
+        {/* STATS */}
         <div className="grid md:grid-cols-2 gap-5">
-
-          <div className="bg-white rounded-2xl border shadow-sm p-5">
-
-            <div className="flex justify-between items-center">
-
+          <div className="bg-white p-5 rounded-2xl border">
+            <div className="flex justify-between">
               <div>
-
-                <p className="text-sm text-gray-500">
-                  Total Images
-                </p>
-
-                <h2 className="text-3xl font-bold mt-2">
-                  {gallery.length}
-                </h2>
-
+                <p className="text-sm text-gray-500">Total Images</p>
+                <h2 className="text-3xl font-bold">{gallery.length}</h2>
               </div>
-
-              <Images className="text-blue-500" />
-
+              <Images />
             </div>
-
           </div>
 
-          <div className="bg-white rounded-2xl border shadow-sm p-5">
-
-            <div className="flex justify-between items-center">
-
+          <div className="bg-white p-5 rounded-2xl border">
+            <div className="flex justify-between">
               <div>
-
-                <p className="text-sm text-gray-500">
-                  Categories
-                </p>
-
-                <h2 className="text-3xl font-bold mt-2">
-                  {
-                    [...new Set(
-                      gallery.map(
-                        (item) =>
-                          item.category
-                      )
-                    )].length
-                  }
+                <p className="text-sm text-gray-500">Categories</p>
+                <h2 className="text-3xl font-bold">
+                  {[...new Set(gallery.map((i) => i.category))].length}
                 </h2>
-
               </div>
-
-              <FolderOpen className="text-green-500" />
-
+              <FolderOpen />
             </div>
-
           </div>
-
         </div>
 
-        {/* Form */}
+        {/* FORM */}
+        <div className="bg-white p-8 rounded-3xl border">
+          <h2 className="text-2xl font-semibold mb-6">
+            Add New Image
+          </h2>
 
-        <div className="bg-white rounded-3xl border shadow-sm p-8">
-
-          <div className="mb-8">
-
-            <h2 className="text-2xl font-semibold">
-              Add New Gallery Image
-            </h2>
-
-            <p className="text-gray-500 mt-2">
-              Upload and organize event images.
-            </p>
-
-          </div>
-
-          <form
-            onSubmit={handleSubmit}
-            className="grid lg:grid-cols-2 gap-8"
-          >
+          <form onSubmit={handleSubmit} className="grid lg:grid-cols-2 gap-8">
 
             <div className="space-y-5">
 
-              <div>
+              <input
+                type="text"
+                name="title"
+                placeholder="Title"
+                value={formData.title}
+                onChange={handleChange}
+                className="w-full border px-4 py-3 rounded-xl"
+                required
+              />
 
-                <label className="block mb-2 text-sm font-medium">
-                  Title
-                </label>
-
-                <input
-                  type="text"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  placeholder="Wedding Styling"
-                  required
-                  className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-black outline-none"
-                />
-
-              </div>
-
-              <div>
-
-                <label className="block mb-2 text-sm font-medium">
-                  Category
-                </label>
-
-                <select
-                  name="category"
-                  value={formData.category}
-                  onChange={handleChange}
-                  required
-                  className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-black outline-none"
-                >
-
-                  <option value="">
-                    Select Category
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full border px-4 py-3 rounded-xl"
+                required
+              >
+                <option value="">Select Category</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
                   </option>
+                ))}
+              </select>
 
-                  {categories.map((cat) => (
-                    <option
-                      key={cat}
-                      value={cat}
-                    >
-                      {cat}
-                    </option>
-                  ))}
-
-                </select>
-
-              </div>
-
-              <div>
-
-                <label className="block mb-2 text-sm font-medium">
-                  Upload Image
-                </label>
-
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  required
-                  className="w-full border rounded-xl p-3"
-                />
-
-              </div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="w-full border p-3 rounded-xl"
+                required
+              />
 
               <button
                 type="submit"
-                className="
-                  flex items-center gap-2
-                  bg-black
-                  text-white
-                  px-6 py-3
-                  rounded-xl
-                  hover:bg-gray-800
-                  transition
-                "
+                className="bg-black text-white px-6 py-3 rounded-xl flex items-center gap-2"
               >
                 <ImagePlus size={18} />
-                Add Image
+                Upload
               </button>
-
             </div>
 
-            {/* Preview */}
+            {/* PREVIEW */}
+            <div className="border rounded-3xl h-[300px] flex items-center justify-center bg-gray-50 overflow-hidden">
+              {preview ? (
+                <img
+                  src={preview}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <p className="text-gray-400">Preview image</p>
+              )}
+            </div>
+          </form>
+        </div>
 
-            <div>
+        {/* GALLERY GRID */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {gallery.map((item) => (
+            <div key={item._id} className="bg-white border rounded-2xl overflow-hidden">
 
-              <label className="block mb-3 text-sm font-medium">
-                Preview
-              </label>
+              <img
+                src={item.imageUrl}
+                className="h-60 w-full object-cover"
+              />
 
-              <div className="
-                border-2
-                border-dashed
-                rounded-3xl
-                h-[350px]
-                flex
-                items-center
-                justify-center
-                overflow-hidden
-                bg-gray-50
-              ">
+              <div className="p-4">
+                <span className="text-xs bg-gray-200 px-2 py-1 rounded-full">
+                  {item.category}
+                </span>
 
-                {preview ? (
+                <h3 className="font-semibold mt-2">{item.title}</h3>
 
-                  <img
-                    src={preview}
-                    alt="preview"
-                    className="
-                      w-full
-                      h-full
-                      object-cover
-                    "
-                  />
-
-                ) : (
-
-                  <div className="text-center">
-
-                    <Images
-                      size={55}
-                      className="mx-auto text-gray-300"
-                    />
-
-                    <p className="mt-4 text-gray-500">
-                      Image preview appears here
-                    </p>
-
-                  </div>
-
-                )}
-
+                <button
+                  onClick={() => handleDelete(item._id)}
+                  className="text-red-500 flex items-center gap-2 mt-4"
+                >
+                  <Trash2 size={16} />
+                  Delete
+                </button>
               </div>
 
             </div>
-
-          </form>
-
-        </div>
-
-        {/* Gallery Grid */}
-
-        <div>
-
-          <h2 className="text-2xl font-bold mb-6">
-            Gallery Collection
-          </h2>
-
-          {gallery.length === 0 ? (
-
-            <div className="
-              bg-white
-              rounded-3xl
-              border
-              shadow-sm
-              p-14
-              text-center
-            ">
-
-              <Images
-                size={65}
-                className="
-                  mx-auto
-                  text-gray-300
-                  mb-4
-                "
-              />
-
-              <h3 className="text-xl font-semibold">
-                No Images Added
-              </h3>
-
-              <p className="text-gray-500 mt-2">
-                Start building your gallery.
-              </p>
-
-            </div>
-
-          ) : (
-
-            <div className="
-              grid
-              sm:grid-cols-2
-              lg:grid-cols-4
-              gap-6
-            ">
-
-              {gallery.map((item) => (
-                <div
-                  key={item._id}
-                  className="bg-white rounded-3xl overflow-hidden border shadow-sm"
-                >
-                  <img
-                    src={item.imageUrl}
-                    alt={item.title}
-                    className="w-full h-64 object-cover"
-                  />
-
-                  <div className="p-5">
-                    <span className="inline-block bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full mb-3">
-                      {item.category}
-                    </span>
-
-                    <h3 className="font-semibold text-lg">
-                      {item.title}
-                    </h3>
-
-                    <button
-                      onClick={() => handleDelete(item._id)}
-                      className="mt-5 flex items-center gap-2 text-red-600"
-                    >
-                      <Trash2 size={16} />
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-          )}
-
+          ))}
         </div>
 
       </div>
-
     </div>
   );
 }

@@ -4,47 +4,47 @@ import Gallery from "@/models/Gallery";
 import cloudinary from "@/lib/cloudinary";
 import streamifier from "streamifier";
 
-// GET all images
+// GET ALL EVENTS
 export async function GET() {
   try {
     await connectDB();
 
-    const images = await Gallery.find().sort({ createdAt: -1 });
+    const data = await Gallery.find().sort({ createdAt: -1 });
 
-    return NextResponse.json(images);
-  } catch (error) {
-    return NextResponse.json(
-      { message: error.message },
-      { status: 500 }
-    );
+    return NextResponse.json(data);
+  } catch (err) {
+    return NextResponse.json({ message: err.message }, { status: 500 });
   }
 }
 
-// POST upload image
+// POST MULTIPLE IMAGES
 export async function POST(req) {
   try {
     await connectDB();
 
     const formData = await req.formData();
-    const file = formData.get("image");
+
     const title = formData.get("title");
     const category = formData.get("category");
+    const files = formData.getAll("images");
 
-    if (!file) {
+    if (!files.length) {
       return NextResponse.json(
-        { message: "No image provided" },
+        { message: "No images provided" },
         { status: 400 }
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const uploadedImages = [];
 
-    const uploadFromBuffer = () =>
-      new Promise((resolve, reject) => {
+    for (const file of files) {
+      const buffer = Buffer.from(await file.arrayBuffer());
+
+      const result = await new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
           { folder: "gallery" },
-          (error, result) => {
-            if (error) reject(error);
+          (err, result) => {
+            if (err) reject(err);
             else resolve(result);
           }
         );
@@ -52,25 +52,25 @@ export async function POST(req) {
         streamifier.createReadStream(buffer).pipe(stream);
       });
 
-    const result = await uploadFromBuffer();
+      uploadedImages.push({
+        url: result.secure_url,
+        public_id: result.public_id,
+      });
+    }
 
-    const newImage = await Gallery.create({
+    const newEvent = await Gallery.create({
       title,
       category,
-      imageUrl: result.secure_url,
-      public_id: result.public_id,
+      images: uploadedImages,
     });
 
-    return NextResponse.json(newImage, { status: 201 });
-  } catch (error) {
-    return NextResponse.json(
-      { message: error.message },
-      { status: 500 }
-    );
+    return NextResponse.json(newEvent, { status: 201 });
+  } catch (err) {
+    return NextResponse.json({ message: err.message }, { status: 500 });
   }
 }
 
-// DELETE image
+// DELETE EVENT
 export async function DELETE(req) {
   try {
     await connectDB();
@@ -78,25 +78,20 @@ export async function DELETE(req) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 
-    const image = await Gallery.findById(id);
+    const event = await Gallery.findById(id);
 
-    if (!image) {
-      return NextResponse.json(
-        { message: "Not found" },
-        { status: 404 }
-      );
+    if (!event) {
+      return NextResponse.json({ message: "Not found" }, { status: 404 });
     }
 
-    // delete from cloudinary
-    await cloudinary.uploader.destroy(image.public_id);
+    for (const img of event.images) {
+      await cloudinary.uploader.destroy(img.public_id);
+    }
 
     await Gallery.findByIdAndDelete(id);
 
     return NextResponse.json({ message: "Deleted" });
-  } catch (error) {
-    return NextResponse.json(
-      { message: error.message },
-      { status: 500 }
-    );
+  } catch (err) {
+    return NextResponse.json({ message: err.message }, { status: 500 });
   }
 }
