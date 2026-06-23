@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Quote from "@/models/Quote";
+import Notification from "@/models/Notification";
 
 /* GET ALL QUOTES */
 

@@ -49,7 +49,7 @@ const galleryEvents = [
       "/akin1.jpg",
       "/akin2.jpg",
       "/akin3.jpg",
-      
+
     ],
   },
 
@@ -74,14 +74,14 @@ const galleryEvents = [
     coverImage: "/birthday.jpg",
 
     images: [
-      "/retreat.jpg",
+      "/cel8.jpg",
       "/cel1.jpg",
       "/cel2.jpg",
       "/cel3.jpg",
       "/cel4.jpg",
       "/cel5.jpg",
       "/cel6.jpg",
-      
+
     ],
   },
 ];
@@ -95,35 +95,48 @@ export default function GalleryPage() {
   const [dbImages, setDbImages] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
+  const closeEvent = () => setSelectedEvent(null);
 
-
-
- const groupedDbEvents = useMemo(() => {
-  return Object.values(
-    dbImages.reduce((acc, item) => {
-      const key = item.title;
-
-      if (!acc[key]) {
-        acc[key] = {
-          id: key,
-          title: item.title,
-          category: item.category,
-          coverImage: item.imageUrl,
-          images: [],
-        };
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setSelectedEvent(null);
       }
+    };
 
-      acc[key].images.push(item.imageUrl || "/fallback.jpg");
-
-      return acc;
-    }, {})
-  );
-}, [dbImages]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
 
-const allEvents = useMemo(() => {
-  return [...galleryEvents, ...groupedDbEvents];
-}, [groupedDbEvents]);;
+
+
+  const groupedDbEvents = useMemo(() => {
+    return Object.values(
+      dbImages.reduce((acc, item) => {
+        const key = item.title;
+
+        if (!acc[key]) {
+          acc[key] = {
+            id: item._id || key,
+            title: item.title,
+            category: item.category,
+            coverImage: item.imageUrl,
+            images: [],
+          };
+        }
+
+        acc[key].images.push(item.imageUrl || "/fallback.jpg");
+
+        return acc;
+      }, {})
+    );
+  }, [dbImages]);
+
+
+  const allEvents = useMemo(() => {
+    return [...galleryEvents, ...groupedDbEvents];
+  }, [groupedDbEvents]);;
 
 
   useEffect(() => {
@@ -150,7 +163,7 @@ const allEvents = useMemo(() => {
       ? allEvents
       : allEvents.filter((event) => event.category === active);
 
- // SAFE COVER IMAGE
+  // SAFE COVER IMAGE
   const getCover = (event) =>
     event.coverImage || event.images?.[0] || "/fallback.jpg";
 
@@ -267,12 +280,12 @@ mb-16
 ">
 
 
-           <motion.div
+            <motion.div
               onClick={() => openEvent(filtered[0])}
               className="relative h-[700px] overflow-hidden rounded-2xl cursor-pointer group"
             >
               <Image
-               src={getCover(filtered[0])}
+                src={getCover(filtered[0])}
                 alt={filtered[0].title}
                 fill
                 className="object-cover transition duration-700 group-hover:scale-110"
@@ -378,20 +391,19 @@ auto-rows-[250px]
           {filtered.slice(5).map((item, index) => (
 
 
-                 <div
+            <div
               key={item.id}
               onClick={() => openEvent(item)}
-              className={`relative overflow-hidden cursor-pointer group rounded-2xl ${
-                index % 4 === 0
-                  ? "row-span-3"
-                  : index % 3 === 0
+              className={`relative overflow-hidden cursor-pointer group rounded-2xl ${index % 4 === 0
+                ? "row-span-3"
+                : index % 3 === 0
                   ? "row-span-2"
                   : "row-span-1"
-              }`}
+                }`}
             >
 
               <Image
-                 src={getCover(item)}
+                src={getCover(item)}
 
                 alt={item.title}
 
@@ -477,46 +489,17 @@ text-3xl
         {selectedEvent && (
 
 
-          <motion.div
-
-            initial={{ opacity: 0 }}
-
-            animate={{ opacity: 1 }}
-
-            exit={{ opacity: 0 }}
-
-            className="
-fixed
-inset-0
-z-50
-bg-black/90
-flex
-items-center
-justify-center
-p-8
-"
-
-
+          <div
+            onClick={closeEvent}
+            className="fixed inset-0 z-50 bg-black/90 flex flex-col"
           >
 
-
             <button
-
-              onClick={() => setSelectedEvent(null)}
-
-              className="
-absolute
-top-8
-right-8
-text-white
-"
-
+              onClick={closeEvent}
+              className="absolute top-8 right-8 text-white z-50"
             >
-
               <X size={40} />
-
             </button>
-
             <div className="absolute top-8 left-8 z-20">
               <p className="text-white/60 text-sm uppercase tracking-[4px]">
                 {selectedEvent.category}
@@ -528,38 +511,45 @@ text-white
             </div>
 
             <div
-              className="
+  onClick={(e) => e.stopPropagation()}
+  className="
+    flex-1
     flex
-    gap-6
+    items-center
     overflow-x-auto
+    overflow-y-hidden
     snap-x
     snap-mandatory
-    h-[75vh] md:h-[85vh]
-    w-full
+    gap-6
     px-6
     scrollbar-hide
     scroll-smooth
+    cursor-grab
+    active:cursor-grabbing
   "
-            >
+  style={{
+    WebkitOverflowScrolling: "touch",
+    touchAction: "pan-x",
+  }}
+>
               {(selectedEvent.images || []).map((img, index) => (
                 <div
                   key={index}
-                  className="
-  relative
-  min-w-[90vw]
-  md:min-w-[1000px]
-  h-full
-  flex-shrink-0
-  snap-center
-  rounded-2xl
-  overflow-hidden
+className="
+relative
+min-w-[80vw] md:min-w-[900px]
+h-[80vh]
+flex-shrink-0
+snap-center
+rounded-2xl
+overflow-hidden
 "
                 >
                   <Image
                     src={img}
                     alt={selectedEvent.title}
                     fill
-                    className="object-contain"
+                    className="object-cover w-full h-full"
                   />
 
                   <div className="absolute bottom-4 right-4 z-20">
@@ -572,7 +562,7 @@ text-white
             </div>
 
 
-          </motion.div>
+          </div>
 
 
         )}

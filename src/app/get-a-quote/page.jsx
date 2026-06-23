@@ -66,8 +66,8 @@ export default function GetQuotePage() {
         },
         body: JSON.stringify(form),
       });
-
-      const data = await res.json();
+const text = await res.text();
+console.log(text);
 
       if (!res.ok) {
         throw new Error(data.message || "Something went wrong");
@@ -151,7 +151,7 @@ export default function GetQuotePage() {
                   value={form.phone}
                   onChange={handleChange}
                   placeholder="Phone Number"
-                 className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl outline-none focus:ring-2 focus:ring-[#572649]"
+                  className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl outline-none focus:ring-2 focus:ring-[#572649]"
                 />
 
                 {/* EVENT TYPE */}
@@ -211,13 +211,16 @@ export default function GetQuotePage() {
                     "Catering",
                     "Venue Styling",
                   ].map((service) => (
-                    <label className="flex items-center gap-2 text-sm md:text-base mb-2">
+                    <label
+                      key={service}
+                      className="flex items-center gap-2 text-sm md:text-base mb-2"
+                    >
                       <input
-                      className="w-4 h-4 accent-[#572649]"
+                        className="w-4 h-4 accent-[#572649]"
                         type="checkbox"
                         checked={form.services.includes(service)}
                         onChange={() => handleServiceToggle(service)}
-                      />{" "}
+                      />
                       {service}
                     </label>
                   ))}
@@ -230,7 +233,7 @@ export default function GetQuotePage() {
                   onChange={handleChange}
                   placeholder="Tell us about your vision..."
                   rows={6}
-                 className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl"
+                  className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl"
                 />
 
                 {/* BUTTON */}

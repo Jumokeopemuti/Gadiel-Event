@@ -152,7 +152,7 @@ export default function AboutSection() {
               className="absolute bottom-[-50px] right-0 w-[55%] shadow-2xl"
             >
               <Image
-                src="/about-small.jpeg"
+                src="/image1.jfif"
                 alt="Luxury Event"
                 width={500}
                 height={500}
