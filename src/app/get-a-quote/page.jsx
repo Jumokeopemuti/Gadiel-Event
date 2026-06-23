@@ -120,131 +120,128 @@ export default function GetQuotePage() {
           <div className="grid lg:grid-cols-[1.5fr_450px] gap-12">
 
             {/* LEFT */}
-            <div className="bg-white rounded-3xl p-10 shadow-sm">
-
+            <div className="bg-white rounded-3xl p-6 md:p-10 shadow-sm">
               <h2 className="text-3xl font-serif mb-10">
                 Event Details
               </h2>
 
-               <form
-            onSubmit={handleSubmit}
-            className="bg-white p-10 rounded-3xl space-y-6"
-          >
+              <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6">
 
-            {/* NAME */}
-            <input
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="Full Name"
-              className="w-full border p-4 rounded-xl"
-            />
+                {/* NAME */}
+                <input
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="Full Name"
+                  className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl outline-none focus:ring-2 focus:ring-[#572649]"
+                />
 
-            {/* EMAIL */}
-            <input
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Email Address"
-              className="w-full border p-4 rounded-xl"
-            />
+                {/* EMAIL */}
+                <input
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="Email Address"
+                  className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl outline-none focus:ring-2 focus:ring-[#572649]"
+                />
 
-            {/* PHONE */}
-            <input
-              name="phone"
-              value={form.phone}
-              onChange={handleChange}
-              placeholder="Phone Number"
-              className="w-full border p-4 rounded-xl"
-            />
+                {/* PHONE */}
+                <input
+                  name="phone"
+                  value={form.phone}
+                  onChange={handleChange}
+                  placeholder="Phone Number"
+                 className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl outline-none focus:ring-2 focus:ring-[#572649]"
+                />
 
-            {/* EVENT TYPE */}
-            <select
-              name="eventType"
-              value={form.eventType}
-              onChange={handleChange}
-              className="w-full border p-4 rounded-xl"
-            >
-              <option value="">Event Type</option>
-              <option>Wedding</option>
-              <option>Corporate Event</option>
-              <option>Birthday Party</option>
-              <option>Luxury Event</option>
-            </select>
+                {/* EVENT TYPE */}
+                <select
+                  name="eventType"
+                  value={form.eventType}
+                  onChange={handleChange}
+                  className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl"
+                >
+                  <option value="">Event Type</option>
+                  <option>Wedding</option>
+                  <option>Corporate Event</option>
+                  <option>Birthday Party</option>
+                  <option>Luxury Event</option>
+                </select>
 
-            {/* DATE */}
-            <input
-              type="date"
-              name="eventDate"
-              value={form.eventDate}
-              onChange={handleChange}
-              className="w-full border p-4 rounded-xl"
-            />
+                {/* DATE */}
+                <input
+                  type="date"
+                  name="eventDate"
+                  value={form.eventDate}
+                  onChange={handleChange}
+                  className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl outline-none focus:ring-2 focus:ring-[#572649]"
+                />
 
-            {/* LOCATION */}
-            <input
-              name="location"
-              value={form.location}
-              onChange={handleChange}
-              placeholder="Event Location"
-              className="w-full border p-4 rounded-xl"
-            />
+                {/* LOCATION */}
+                <input
+                  name="location"
+                  value={form.location}
+                  onChange={handleChange}
+                  placeholder="Event Location"
+                  className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl outline-none focus:ring-2 focus:ring-[#572649]"
+                />
 
-            {/* BUDGET */}
-            <select
-              name="budget"
-              value={form.budget}
-              onChange={handleChange}
-              className="w-full border p-4 rounded-xl"
-            >
-              <option value="">Budget Range</option>
-              <option>₦500k - ₦1M</option>
-              <option>₦1M - ₦3M</option>
-              <option>₦3M - ₦5M</option>
-              <option>₦5M+</option>
-            </select>
+                {/* BUDGET */}
+                <select
+                  name="budget"
+                  value={form.budget}
+                  onChange={handleChange}
+                  className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl"
+                >
+                  <option value="">Budget Range</option>
+                  <option>₦500k - ₦1M</option>
+                  <option>₦1M - ₦3M</option>
+                  <option>₦3M - ₦5M</option>
+                  <option>₦5M+</option>
+                </select>
 
-            {/* SERVICES */}
-            <div>
-              <p className="font-medium mb-3">Services Needed</p>
+                {/* SERVICES */}
+                <div>
+                  <p className="font-medium mb-3">Services Needed</p>
 
-              {[
-                "Event Decoration",
-                "Full Planning",
-                "Photography",
-                "Catering",
-                "Venue Styling",
-              ].map((service) => (
-                <label key={service} className="block">
-                  <input
-                    type="checkbox"
-                    checked={form.services.includes(service)}
-                    onChange={() => handleServiceToggle(service)}
-                  />{" "}
-                  {service}
-                </label>
-              ))}
-            </div>
+                  {[
+                    "Event Decoration",
+                    "Full Planning",
+                    "Photography",
+                    "Catering",
+                    "Venue Styling",
+                  ].map((service) => (
+                    <label className="flex items-center gap-2 text-sm md:text-base mb-2">
+                      <input
+                      className="w-4 h-4 accent-[#572649]"
+                        type="checkbox"
+                        checked={form.services.includes(service)}
+                        onChange={() => handleServiceToggle(service)}
+                      />{" "}
+                      {service}
+                    </label>
+                  ))}
+                </div>
 
-            {/* MESSAGE */}
-            <textarea
-              name="message"
-              value={form.message}
-              onChange={handleChange}
-              placeholder="Tell us about your vision..."
-              rows={6}
-              className="w-full border p-4 rounded-xl"
-            />
+                {/* MESSAGE */}
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  placeholder="Tell us about your vision..."
+                  rows={6}
+                 className="w-full border p-3 md:p-4 text-sm md:text-base rounded-xl"
+                />
 
-            {/* BUTTON */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-[#572649] text-white px-8 py-4 rounded-full"
-            >
-              {loading ? "Sending..." : "Request Quote"}
-            </button>
-          </form>
+                {/* BUTTON */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="bg-[#572649] text-white px-8 py-4 rounded-full"
+                >
+                  {loading ? "Sending..." : "Request Quote"}
+                </button>
+              </form>
             </div>
 
             {/* RIGHT INFO PANEL */}

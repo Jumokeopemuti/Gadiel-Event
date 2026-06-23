@@ -71,6 +71,8 @@ export default function Navbar() {
 
 
 
+
+
     const [search, setSearch] = useState("");
     const [results, setResults] = useState([]);
     const router = useRouter();
@@ -90,6 +92,15 @@ export default function Navbar() {
         }, 700);
     };
 
+
+    const handleMobileNav = (path) => {
+        setMenuOpen(false);
+
+        // wait for slide-out animation to finish
+     
+
+        setTimeout(() => router.push(path), 500);
+    };
 
     const [activeService, setActiveService] = useState(0);
 
@@ -310,24 +321,14 @@ export default function Navbar() {
 
                 <ul className="flex flex-col gap-4 my-6 p-6 text-lg font-semibold">
 
-                    <li onClick={() => handleMobileNav('/')} className="cursor-pointer">
+                    <li onClick={() => handleMobileNav("/")} className="cursor-pointer">
                         Home
                     </li>
 
-                    {/* ABOUT */}
-                    <li>
-                        <div
-
-                            className="flex justify-between items-center cursor-pointer"
-                        >
-                            About
-
-                        </div>
-
-
-
-
+                    <li onClick={() => handleMobileNav("/about")} className="cursor-pointer">
+                        About
                     </li>
+
 
                     {/* SERVICES */}
                     <li>
@@ -369,15 +370,15 @@ export default function Navbar() {
                         </div>
                     </li>
 
-                    <li onClick={() => router.push("/blog")} className="hover:text-purple-400 cursor-pointer">
+                    <li onClick={() => handleMobileNav("/blog")} className="cursor-pointer">
                         Blog
                     </li>
 
-                    <li onClick={() => router.push("/gallery")} className="hover:text-purple-400 cursor-pointer">
+                    <li onClick={() => handleMobileNav("/gallery")} className="hover:text-purple-400 cursor-pointer">
                         Gallery
                     </li>
 
-                    <li onClick={() => router.push("/contact")} className="hover:text-purple-400 cursor-pointer">
+                    <li onClick={() => handleMobileNav("/contact")} className="hover:text-purple-400 cursor-pointer">
                         Contact
                     </li>
                 </ul>
@@ -452,7 +453,7 @@ export default function Navbar() {
 
                 <div className="flex gap-6 items-center mr-12 py-3 text-sm lg:text-sm">
 
-                   
+
 
                     <a
                         href="https://www.linkedin.com/in/olajumoke-opemuti-24b73011/"
@@ -472,7 +473,7 @@ export default function Navbar() {
                         <FaInstagram />
                     </a>
 
-                     <a
+                    <a
                         href="https://facebook.com/yourpage"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -496,7 +497,7 @@ export default function Navbar() {
 
             {/* ================= MAIN NAV ================= */}
             <nav
-                className={`bg-white text-gray-600 py-3 flex justify-between items-center shadow-sm ${isSticky ? "fixed top-0 right-0 left-0 z-50" : ""
+                className={`bg-white text-gray-600 py-3 flex justify-between items-center shadow-sm ${isSticky ? "fixed top-0 right-0 left-0 z-40" : ""
                     }`}
             >
                 <div className={`w-full h-30 mx-auto flex items-center justify-between px-6 lg:px-10

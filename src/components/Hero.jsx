@@ -148,56 +148,58 @@ export default function Hero() {
               transition={{
                 delay: index === 1 ? 0.4 : index * 0.2,
               }}
-              whileHover={{ y: -15 }}
+              whileHover={{
+                y: window.innerWidth >= 1024 ? -15 : 0,
+              }}
               className={`
                 group relative cursor-pointer overflow-hidden shadow-xl
                 ${index === 1 ? "lg:mt-0" : "lg:mt-12"}
               `}
             >
               {/* Image */}
-              <motion.div
-                whileHover={{
-                  scale: 1.08,
-                }}
-                transition={{
-                  duration: 0.8,
-                }}
-                className="overflow-hidden"
-              >
+              <div className="overflow-hidden">
                 <Image
                   src={item.image}
                   alt={item.title}
                   width={700}
                   height={900}
                   className={`
-                    w-full object-cover
-                    ${index === 1
+      w-full object-cover
+      transition-transform duration-700
+      lg:group-hover:scale-110
+      ${index === 1
                       ? "h-[620px]"
                       : "h-[500px]"
                     }
-                  `}
+    `}
                 />
-              </motion.div>
+              </div>
 
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
 
               {/* Content */}
               <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileHover={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  duration: 0.5,
-                }}
                 className="
-                  absolute bottom-0 left-0 right-0
-                  p-6 md:p-8
-                "
+    absolute bottom-0 left-0 right-0
+    p-6 md:p-8
+  "
               >
-                <div className="rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-md">
+                <div
+                  className="
+      rounded-2xl border border-white/20
+      bg-white/10 p-5 backdrop-blur-md
+
+      opacity-100 translate-y-0
+
+      lg:opacity-0
+      lg:translate-y-10
+      lg:group-hover:opacity-100
+      lg:group-hover:translate-y-0
+
+      transition-all duration-500
+    "
+                >
                   <h3 className="mb-3 text-2xl font-semibold text-white">
                     {item.title}
                   </h3>
@@ -209,13 +211,11 @@ export default function Hero() {
                   <Link
                     href={item.link}
                     className="
-    mt-5
-    flex items-center gap-2
-    text-white
-cursor-pointer
-    transition-all
-    hover:gap-4
-  "
+        mt-5 flex items-center gap-2
+        text-white
+        transition-all
+        hover:gap-4
+      "
                   >
                     Explore →
                   </Link>

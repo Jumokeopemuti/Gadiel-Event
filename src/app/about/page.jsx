@@ -76,7 +76,7 @@ export default function AboutHeader() {
                         </div>
 
                         {/* Floating Card */}
-                        <div className="relative mt-20 ml-10 lg:ml-24">
+                        <div className="relative mt-20 mx-auto lg:ml-24 max-w-[280px] lg:max-w-none">
                             <div className="relative w-[280px] h-[360px] lg:w-full lg:h-[200px] overflow-hidden shadow-2xl">
                                 <Image
                                     src="/show6.jpg"
@@ -86,11 +86,11 @@ export default function AboutHeader() {
                                 />
                             </div>
 
-                            <div className="absolute -bottom-8 -left-8 bg-white px-8 py-6 shadow-xl">
-                                <p className="text-sm uppercase tracking-[0.35em] text-[#7a5b63]">
+                            <div className="absolute bottom-4 left-4 lg:-bottom-8 lg:-left-8 bg-white px-4 py-4 lg:px-8 lg:py-6 shadow-xl max-w-[220px]">
+                                <p className="text-xs lg:text-sm uppercase tracking-[0.25em] lg:tracking-[0.35em] text-[#7a5b63]">
                                     Since 2018
                                 </p>
-                                <h3 className="font-serif text-2xl mt-2">
+                                <h3 className="font-serif text-lg lg:text-2xl mt-2">
                                     Excellence in every detail
                                 </h3>
                             </div>
@@ -200,7 +200,7 @@ export default function AboutHeader() {
 
                         <Link href="/services/core">
 
-                        <button className="
+                            <button className="
         bg-[#d6a073]
         hover:bg-[#c58c5c]
         px-10 py-5
@@ -208,8 +208,8 @@ export default function AboutHeader() {
         font-medium
         transition-all
       ">
-                            Explore Experiences
-                        </button>
+                                Explore Experiences
+                            </button>
 
                         </Link>
 
