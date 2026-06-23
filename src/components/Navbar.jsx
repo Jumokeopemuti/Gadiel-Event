@@ -76,6 +76,7 @@ export default function Navbar() {
     const [search, setSearch] = useState("");
     const [results, setResults] = useState([]);
     const router = useRouter();
+   const [nextPath, setNextPath] = useState(null);
 
 
     const searchRef = useRef(null);
@@ -93,15 +94,24 @@ export default function Navbar() {
     };
 
 
-    const handleMobileNav = (path) => {
-        setMenuOpen(false);
 
-        // wait for slide-out animation to finish
-     
+const handleMobileNav = (path) => {
+    setMenuOpen(false);
+    setNextPath(path);
+};
 
-        setTimeout(() => router.push(path), 500);
-    };
+useEffect(() => {
+    if (!menuOpen && nextPath) {
+        const timer = setTimeout(() => {
+            router.push(nextPath);
+            setNextPath(null);
+        }, 500);
 
+        return () => clearTimeout(timer);
+    }
+}, [menuOpen, nextPath]);
+
+    
     const [activeService, setActiveService] = useState(0);
 
 

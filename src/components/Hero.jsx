@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 
 const galleryImages = [
@@ -28,6 +29,7 @@ const galleryImages = [
     link: "/services/corporate-events",
   },
 ];
+
 
 
 
@@ -75,6 +77,25 @@ const cardVariant = {
 };
 
 export default function Hero() {
+
+
+
+  
+const [isDesktop, setIsDesktop] = useState(false);
+
+useEffect(() => {
+  const checkScreen = () => {
+    setIsDesktop(window.innerWidth >= 1024);
+  };
+
+  checkScreen();
+
+  window.addEventListener("resize", checkScreen);
+
+  return () =>
+    window.removeEventListener("resize", checkScreen);
+}, []);
+
   return (
     <section className="relative min-h-screen overflow-hidden bg-white py-16">
       <div className="mx-auto max-w-7xl px-6">
@@ -148,9 +169,11 @@ export default function Hero() {
               transition={{
                 delay: index === 1 ? 0.4 : index * 0.2,
               }}
-              whileHover={{
-                y: window.innerWidth >= 1024 ? -15 : 0,
-              }}
+              whileHover={
+                isDesktop
+                  ? { y: -15 }
+                  : {}
+              }
               className={`
                 group relative cursor-pointer overflow-hidden shadow-xl
                 ${index === 1 ? "lg:mt-0" : "lg:mt-12"}

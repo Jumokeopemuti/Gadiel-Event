@@ -2,11 +2,14 @@ import { blogPosts as staticPosts } from "@/data/blogPosts";
 
 export async function getAllBlogPosts() {
   try {
-    const res = await fetch("http://localhost:3000/api/blogs", {
-  next: { revalidate: 60 },
-});
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SITE_URL}/api/blogs`,
+      {
+        next: { revalidate: 60 },
+      }
+    );
 
-    
+
 
     const adminPosts = res.ok ? await res.json() : [];
 
