@@ -355,23 +355,23 @@ useEffect(() => {
                                 }`}
                         >
                             <ul className="pl-4 text-gray-600 text-sm flex flex-col gap-2">
-                                <li onClick={() => router.push('/services/core')} className="px-4 cursor-pointer hover:bg-blue-100">
+                                <li onClick={() => handleMobileNav('/services/core')} className="px-4 cursor-pointer hover:bg-blue-100">
                                     Core Services
                                 </li>
 
-                                <li onClick={() => router.push('/services/social-events')} className="px-4 cursor-pointer hover:bg-blue-100">
+                                <li onClick={() => handleMobileNav('/services/social-events')} className="px-4 cursor-pointer hover:bg-blue-100">
                                     Social Events
                                 </li>
 
-                                <li onClick={() => router.push('/services/corporate-events')} className="px-4 cursor-pointer hover:bg-blue-100">
+                                <li onClick={() => handleMobileNav('/services/corporate-events')} className="px-4 cursor-pointer hover:bg-blue-100">
                                     Corporate Events
                                 </li>
 
-                                <li onClick={() => router.push('/services/memorial')} className="px-4 cursor-pointer hover:bg-blue-100">
+                                <li onClick={() => handleMobileNav('/services/memorial')} className="px-4 cursor-pointer hover:bg-blue-100">
                                     Memorial & Special Gatherings
                                 </li>
 
-                                <li onClick={() => router.push('/services/luxury-events')} className="px-4 cursor-pointer hover:bg-blue-100">
+                                <li onClick={() => handleMobileNav('/services/luxury-events')} className="px-4 cursor-pointer hover:bg-blue-100">
                                     Experiential & Luxury Events
                                 </li>
 
@@ -396,14 +396,14 @@ useEffect(() => {
                 <div className="flex flex-col items-start pl-4 pb-4 gap-3">
 
                     <button
-                        onClick={() => router.push("/get-a-quote")}
+                        onClick={() => handleMobileNav("/get-a-quote")}
                         className="px-5 py-2 border-2 border-[#572649] cursor-pointer text-xm md:text-sm xl:text-lg text-[#572649] rounded-full hover:bg-[#572649] hover:text-white transition"
                     >
                         Get a Quote
                     </button>
 
                     <button
-                        onClick={() => router.push("/check-availability")}
+                        onClick={() => handleMobileNav("/check-availability")}
                         className="px-5 py-2 bg-[#85366e] text-white cursor-pointer text-xm md:text-sm xl:text-lg rounded-full hover:opacity-90 transition"
                     >
                         Check Availability
