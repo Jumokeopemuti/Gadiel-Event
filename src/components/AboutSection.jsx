@@ -95,7 +95,7 @@ export default function AboutSection() {
                 duration: 0.8,
                 delay: 0.2,
               }}
-              className="absolute -top-20 left-56 md:left-120 -translate-x-1/2 z-10"
+              className="absolute -top-15 md:-top-20 left-65 md:left-120 -translate-x-1/2 z-10"
             >
               <h2 className="text-[90px] md:text-[130px] font-serif text-[#4d1e3f] leading-none">
                 2018
