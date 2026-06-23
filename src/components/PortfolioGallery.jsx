@@ -142,18 +142,18 @@ export default function PortfolioGallery() {
                 <motion.div
                   whileHover={!isMobile ? { scale: 1.02 } : {}}
                   transition={{ duration: 0.5 }}
-                  className={`
-    relative overflow-hidden
-    transition-all duration-700
-    ease-[cubic-bezier(.22,1,.36,1)]
-
-    ${isMobile
-                      ? "h-[300px]"
-                      : isActive
-                        ? "h-[320px]"
-                        : "h-[520px]"
-                    }
-  `}
+                 className={`
+  relative overflow-hidden
+  transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]
+  ${isMobile
+    ? isActive
+      ? "h-[420px]"
+      : "h-[300px]"
+    : isActive
+    ? "h-[320px]"
+    : "h-[520px]"
+  }
+`}
                 >
 
                   {isMobile && (
@@ -161,7 +161,7 @@ export default function PortfolioGallery() {
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          setActive(active === index ? -1 : index);
+                          setActive((prev) => (prev === index ? -1 : index));
                         }}
                         className="rounded-full bg-white/90 p-2 shadow-md"
                       >
@@ -195,7 +195,7 @@ export default function PortfolioGallery() {
 
                 {/* Content */}
                 <AnimatePresence mode="wait" initial={false}>
-                  {(isMobile ? isActive : isActive) && (
+                  {isActive && (
                     <motion.div
                       initial={{
                         height: 0,

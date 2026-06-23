@@ -3,8 +3,10 @@ import { blogPosts as staticPosts } from "@/data/blogPosts";
 export async function getAllBlogPosts() {
   try {
     const res = await fetch("http://localhost:3000/api/blogs", {
-      cache: "no-store",
-    });
+  next: { revalidate: 60 },
+});
+
+    
 
     const adminPosts = res.ok ? await res.json() : [];
 
