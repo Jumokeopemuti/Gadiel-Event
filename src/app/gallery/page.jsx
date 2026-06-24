@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
 import { useMemo } from "react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
+
+
 
 
 
@@ -90,6 +92,7 @@ export default function GalleryPage() {
 
 
   const [active, setActive] = useState("All");
+  const [currentImage, setCurrentImage] = useState(0);
 
 
   const [dbImages, setDbImages] = useState([]);
@@ -107,6 +110,29 @@ export default function GalleryPage() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setSelectedEvent(null);
+      }
+
+      if (e.key === "ArrowRight") {
+        nextImage();
+      }
+
+      if (e.key === "ArrowLeft") {
+        prevImage();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedEvent]);
 
 
 
@@ -156,6 +182,23 @@ export default function GalleryPage() {
   };
 
 
+  const nextImage = () => {
+    if (!selectedEvent) return;
+
+    setCurrentImage((prev) =>
+      prev === selectedEvent.images.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevImage = () => {
+    if (!selectedEvent) return;
+
+    setCurrentImage((prev) =>
+      prev === 0 ? selectedEvent.images.length - 1 : prev - 1
+    );
+  };
+
+
 
 
   const filtered =
@@ -169,9 +212,10 @@ export default function GalleryPage() {
 
   const openEvent = (event) => {
     if (!event?.images?.length) return;
+
+    setCurrentImage(0);
     setSelectedEvent(event);
   };
-
   return (
 
     <section className="bg-[#f7f4f1] min-h-screen py-24">
@@ -511,54 +555,86 @@ text-3xl
             </div>
 
             <div
-  onClick={(e) => e.stopPropagation()}
-  className="
+              onClick={(e) => e.stopPropagation()}
+              className="
     flex-1
     flex
     items-center
-    overflow-x-auto
-    overflow-y-hidden
-    snap-x
-    snap-mandatory
-    gap-6
-    px-6
-    scrollbar-hide
-    scroll-smooth
-    cursor-grab
-    active:cursor-grabbing
+    justify-center
+    px-10
   "
-  style={{
-    WebkitOverflowScrolling: "touch",
-    touchAction: "pan-x",
-  }}
+            >
+              <div
+  className="
+    relative
+    w-[95vw]
+    max-w-[1500px]
+    aspect-[16/9]
+    mx-auto
+    overflow-hidden
+    rounded-2xl
+    bg-black
+  "
 >
-              {(selectedEvent.images || []).map((img, index) => (
-                <div
-                  key={index}
-className="
-relative
-min-w-[80vw] md:min-w-[900px]
-h-[80vh]
-flex-shrink-0
-snap-center
-rounded-2xl
-overflow-hidden
-"
-                >
-                  <Image
-                    src={img}
-                    alt={selectedEvent.title}
-                    fill
-                    className="object-cover w-full h-full"
-                  />
+  <Image
+    src={selectedEvent.images[currentImage]}
+    alt={selectedEvent.title}
+    fill
+    className="object-cover"
+  />
 
-                  <div className="absolute bottom-4 right-4 z-20">
-                    <span className="bg-black/60 text-white px-3 py-1 rounded-full text-sm">
-                      {index + 1} / {selectedEvent.images.length}
-                    </span>
-                  </div>
+                {/* LEFT BUTTON */}
+                <button
+                  onClick={prevImage}
+                  className="
+    absolute
+    -left-1
+    top-1/2
+    -translate-y-1/2
+    z-30
+    w-16
+    h-16
+    rounded-full
+    bg-white/10
+    backdrop-blur-md
+    text-white
+    flex
+    items-center
+    justify-center
+  "
+                >
+                  <ChevronLeft size={36} />
+                </button>
+
+                <button
+                  onClick={nextImage}
+                  className="
+    absolute
+    -right-1
+    top-1/2
+    -translate-y-1/2
+    z-30
+    w-16
+    h-16
+    rounded-full
+    bg-white/10
+    backdrop-blur-md
+    text-white
+    flex
+    items-center
+    justify-center
+  "
+                >
+                  <ChevronRight size={36} />
+                </button>
+
+                {/* COUNTER */}
+                <div className="absolute bottom-6 right-6 z-20">
+                  <span className="bg-black/60 text-white px-4 py-2 rounded-full">
+                    {currentImage + 1} / {selectedEvent.images.length}
+                  </span>
                 </div>
-              ))}
+              </div>
             </div>
 
 

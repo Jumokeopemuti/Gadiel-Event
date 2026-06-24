@@ -1,10 +1,26 @@
 "use client";
 
 import { FaPlay } from "react-icons/fa";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { X } from "lucide-react";
+
 
 export default function VideoPreview() {
     const [showVideo, setShowVideo] = useState(false);
+
+useEffect(() => {
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape") {
+      setShowVideo(false);
+    }
+  };
+
+  window.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    window.removeEventListener("keydown", handleKeyDown);
+  };
+}, []);
 
     return (
         <section className="relative py-24 bg-[#f7f3ef] overflow-hidden">
@@ -54,33 +70,50 @@ export default function VideoPreview() {
 
             {/* VIDEO MODAL */}
             {showVideo && (
-                <div
-                    className="
-            fixed
-            inset-0
-            bg-black/80
-            z-[99999]
-            flex
-            items-center
-            justify-center
-            p-6
-          "
-                >
-                    <div className="relative w-full max-w-5xl">
+               <div
+  className="
+    fixed
+    inset-0
+    bg-black/80
+    z-[99999]
+    flex
+    items-center
+    justify-center
+    p-6
+  "
+  onClick={() => setShowVideo(false)}
+>
+                    <div
+  className="relative w-full max-w-5xl"
+  onClick={(e) => e.stopPropagation()}
+>
 
                         {/* Close */}
                         <button
-                            onClick={() => setShowVideo(false)}
-                            className="
-                absolute
-                -top-12
-                right-0
-                text-white
-                text-4xl
-              "
-                        >
-                            ×
-                        </button>
+  onClick={() => setShowVideo(false)}
+  className="
+    absolute
+    -top-9
+    right-0
+    w-12
+    h-12
+    rounded-full
+    bg-white/10
+    backdrop-blur-md
+    border
+    border-white/20
+    flex
+    items-center
+    justify-center
+    text-white
+    hover:bg-white
+    hover:text-black
+    transition-all
+    duration-300
+  "
+>
+  <X size={24} />
+</button>
 
                         <div className="aspect-video">
                             <video

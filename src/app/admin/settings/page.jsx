@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     Building2,
     Mail,
@@ -28,13 +28,50 @@ export default function SettingsPage() {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = async (e) => {
+  e.preventDefault();
 
-        console.log(settings);
+  try {
+    const res = await fetch(
+      "/api/settings",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify(settings),
+      }
+    );
 
-        alert("Settings saved.");
-    };
+    if (res.ok) {
+      alert(
+        "Settings updated successfully"
+      );
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+    useEffect(() => {
+  fetchSettings();
+}, []);
+
+const fetchSettings = async () => {
+  try {
+    const res = await fetch(
+      "/api/settings"
+    );
+
+    const data = await res.json();
+
+    setSettings(data);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">

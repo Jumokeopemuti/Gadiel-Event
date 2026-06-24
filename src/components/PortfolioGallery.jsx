@@ -36,20 +36,28 @@ const items = [
 ];
 
 export default function PortfolioGallery() {
-  const [active, setActive] = useState(-1);
-  const [isMobile, setIsMobile] = useState(false);
+  const [active, setActive] = useState(0);
+  const [isMobile, setIsMobile] = useState(null);
+
+
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const checkScreen = () => {
       setIsMobile(window.innerWidth < 1024);
     };
 
     checkScreen();
+
     window.addEventListener("resize", checkScreen);
 
-    return () => window.removeEventListener("resize", checkScreen);
+    return () =>
+      window.removeEventListener(
+        "resize",
+        checkScreen
+      );
   }, []);
-
 
 
 
@@ -64,6 +72,11 @@ export default function PortfolioGallery() {
       setActive(0);
     }
   }, [isMobile]);
+
+
+  if (isMobile === null) {
+  return null;
+}
 
   return (
     <section
@@ -142,17 +155,17 @@ export default function PortfolioGallery() {
                 <motion.div
                   whileHover={!isMobile ? { scale: 1.02 } : {}}
                   transition={{ duration: 0.5 }}
-                 className={`
+                  className={`
   relative overflow-hidden
   transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]
   ${isMobile
-    ? isActive
-      ? "h-[420px]"
-      : "h-[300px]"
-    : isActive
-    ? "h-[320px]"
-    : "h-[520px]"
-  }
+                      ? isActive
+                        ? "h-[420px]"
+                        : "h-[300px]"
+                      : isActive
+                        ? "h-[320px]"
+                        : "h-[520px]"
+                    }
 `}
                 >
 
